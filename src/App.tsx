@@ -123,7 +123,9 @@ export default function App() {
           </header>
 
           <div className="stat-grid">
-            <StatCard label="Actual points" value={result.actualTotal.toLocaleString()} />
+            <StatCard label="Official points" value={result.actualTotal.toLocaleString()} />
+            <StatCard label="Score before hits" value={result.actualBeforeHitsTotal.toLocaleString()} />
+            <StatCard label="Transfer hits" value={result.transferCostTotal.toLocaleString()} tone="warn" />
             <StatCard label="Optimal points" value={result.optimalTotal.toLocaleString()} tone="good" />
             <StatCard
               label="Left on pitch"
@@ -158,7 +160,7 @@ export default function App() {
           <div className="empty-grid">
             <p>Uses your actual 15-player squad each gameweek.</p>
             <p>Finds the best valid formation and optimal captain.</p>
-            <p>Does not redo transfers, chips, or season strategy.</p>
+            <p>Subtracts fixed transfer hits so totals match FPL.</p>
             <p>Keeps Team IDs and results in this browser session only.</p>
           </div>
         </section>

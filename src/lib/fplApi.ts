@@ -30,6 +30,8 @@ export interface FplHistoryResponse {
   current: Array<{
     event: number;
     points: number;
+    total_points: number;
+    event_transfers_cost: number;
   }>;
 }
 

@@ -36,8 +36,8 @@ const mockClient: FplClient = {
   }),
   getHistory: async () => ({
     current: [
-      { event: 1, points: 40 },
-      { event: 2, points: 50 },
+      { event: 1, points: 40, total_points: 40, event_transfers_cost: 0 },
+      { event: 2, points: 50, total_points: 86, event_transfers_cost: 4 },
     ],
   }),
   getPicks: async (_teamId, gw) => ({
@@ -66,8 +66,15 @@ describe("analyzeSeason", () => {
     expect(result.teamName).toBe("Test FC");
     expect(result.managerName).toBe("Ada Lovelace");
     expect(result.gameweeks).toHaveLength(2);
-    expect(result.actualTotal).toBe(90);
-    expect(result.optimalTotal).toBe(96);
+    expect(result.actualTotal).toBe(86);
+    expect(result.actualBeforeHitsTotal).toBe(90);
+    expect(result.transferCostTotal).toBe(4);
+    expect(result.optimalTotal).toBe(92);
+    expect(result.gameweeks[1].actual).toBe(46);
+    expect(result.gameweeks[1].actualBeforeHits).toBe(50);
+    expect(result.gameweeks[1].optimal).toBe(46);
+    expect(result.gameweeks[1].optimalBeforeHits).toBe(50);
+    expect(result.gameweeks[1].transferCost).toBe(4);
     expect(result.gameweeks[0].actualCaptain?.name).toBe("Mid A");
     expect(result.gameweeks[0].actualCaptain?.points).toBe(2);
     expect(result.gameweeks[0].optimalCaptain?.name).toBe("Mid C");

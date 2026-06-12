@@ -33,7 +33,10 @@ export interface OptimizationResult {
 export interface GameweekResult {
   gw: number;
   actual: number;
+  actualBeforeHits: number;
   optimal: number;
+  optimalBeforeHits: number;
+  transferCost: number;
   left: number;
   chip: ChipId;
   actualCaptain: OptimizedPlayer | null;
@@ -47,6 +50,8 @@ export interface SeasonResult {
   managerName: string;
   gameweeks: GameweekResult[];
   actualTotal: number;
+  actualBeforeHitsTotal: number;
+  transferCostTotal: number;
   optimalTotal: number;
 }
 

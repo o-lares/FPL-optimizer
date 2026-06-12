@@ -60,13 +60,20 @@ export async function analyzeSeason(
     const squad = picks.picks.map((pick) => pick.element);
     const actualCaptainId = picks.picks.find((pick) => pick.is_captain)?.element ?? null;
     const optimal = findOptimalLineup(squad, scores, positions, picks.active_chip);
-    const actual = gwHistory.points;
+    const transferCost = gwHistory.event_transfers_cost ?? 0;
+    const actualBeforeHits = gwHistory.points;
+    const actual = actualBeforeHits - transferCost;
+    const optimalBeforeHits = optimal.points;
+    const optimalAfterHits = optimalBeforeHits - transferCost;
 
     gameweeks.push({
       gw: gwHistory.event,
       actual,
-      optimal: optimal.points,
-      left: optimal.points - actual,
+      actualBeforeHits,
+      optimal: optimalAfterHits,
+      optimalBeforeHits,
+      transferCost,
+      left: optimalAfterHits - actual,
       chip: picks.active_chip,
       actualCaptain: actualCaptainId
         ? toOptimizedPlayer(actualCaptainId, actualCaptainId, playerMeta, scores)
@@ -89,7 +96,9 @@ export async function analyzeSeason(
     teamName: entry.name,
     managerName: `${entry.player_first_name} ${entry.player_last_name}`.trim(),
     gameweeks,
-    actualTotal: gameweeks.reduce((sum, gw) => sum + gw.actual, 0),
+    actualTotal: history.current.at(-1)?.total_points ?? gameweeks.reduce((sum, gw) => sum + gw.actual, 0),
+    actualBeforeHitsTotal: gameweeks.reduce((sum, gw) => sum + gw.actualBeforeHits, 0),
+    transferCostTotal: gameweeks.reduce((sum, gw) => sum + gw.transferCost, 0),
     optimalTotal: gameweeks.reduce((sum, gw) => sum + gw.optimal, 0),
   };
 }

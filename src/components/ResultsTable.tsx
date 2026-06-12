@@ -19,9 +19,11 @@ export function ResultsTable({ gameweeks }: ResultsTableProps) {
           <thead>
             <tr>
               <th>GW</th>
-              <th>Actual</th>
+              <th>Official</th>
+              <th>Before hits</th>
               <th>Optimal</th>
               <th>Left</th>
+              <th>Hits</th>
               <th>Chip</th>
               <th>Your captain</th>
               <th>Optimal captain</th>
@@ -33,6 +35,7 @@ export function ResultsTable({ gameweeks }: ResultsTableProps) {
               <tr key={gameweek.gw}>
                 <td>GW{gameweek.gw}</td>
                 <td>{gameweek.actual}</td>
+                <td>{gameweek.actualBeforeHits}</td>
                 <td>{gameweek.optimal}</td>
                 <td
                   className="gap-cell"
@@ -40,6 +43,7 @@ export function ResultsTable({ gameweeks }: ResultsTableProps) {
                 >
                   {gameweek.left}
                 </td>
+                <td>{gameweek.transferCost > 0 ? `-${gameweek.transferCost}` : "0"}</td>
                 <td>{formatChip(gameweek.chip)}</td>
                 <td>{formatCaptain(gameweek.actualCaptain)}</td>
                 <td>{formatCaptain(gameweek.optimalCaptain)}</td>
