@@ -28,8 +28,9 @@ never ask for an FPL password, auth cookie, session token, or OAuth permission.
   is configurable with `VITE_FPL_PROXY_URL`.
 
 Important: a third-party CORS proxy can see requested FPL API URLs, including
-Team IDs. For a more private public release, replace the default proxy with your
-own small proxy, such as a Cloudflare Worker.
+Team IDs, and may rate-limit full-season analysis. For a more private and
+reliable public release, use the included Cloudflare Worker proxy in
+`cloudflare-worker/`.
 
 ## Local setup
 
